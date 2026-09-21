@@ -1,0 +1,116 @@
+{
+  "expo": {
+    "name": "Quantrion",
+    "slug": "quantrion",
+    "version": "1.0.0",
+    "orientation": "default",
+    "icon": "./assets/icon.png",
+    "scheme": "quantrion",
+    "userInterfaceStyle": "dark",
+    "newArchEnabled": true,
+    "splash": {
+      "image": "./assets/splash-icon.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#070B14"
+    },
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "ai.quantrion.app",
+      "buildNumber": "1",
+      "infoPlist": {
+        "NSCameraUsageDescription": "Quantrion uses the camera to scan problems and upload study images for AI Tutor.",
+        "NSMicrophoneUsageDescription": "Quantrion uses the microphone for voice questions in AI Tutor.",
+        "NSPhotoLibraryUsageDescription": "Quantrion needs photo access to attach images to doubts and library uploads.",
+        "NSFaceIDUsageDescription": "Quantrion uses Face ID to unlock your learning session securely.",
+        "UIBackgroundModes": ["fetch", "remote-notification"]
+      },
+      "associatedDomains": [
+        "applinks:quantrion.ai",
+        "applinks:www.quantrion.ai"
+      ]
+    },
+    "android": {
+      "package": "ai.quantrion.app",
+      "versionCode": 1,
+      "adaptiveIcon": {
+        "backgroundColor": "#070B14",
+        "foregroundImage": "./assets/android-icon-foreground.png",
+        "backgroundImage": "./assets/android-icon-background.png",
+        "monochromeImage": "./assets/android-icon-monochrome.png"
+      },
+      "permissions": [
+        "CAMERA",
+        "RECORD_AUDIO",
+        "READ_EXTERNAL_STORAGE",
+        "WRITE_EXTERNAL_STORAGE",
+        "VIBRATE",
+        "RECEIVE_BOOT_COMPLETED",
+        "USE_BIOMETRIC",
+        "USE_FINGERPRINT",
+        "POST_NOTIFICATIONS"
+      ],
+      "intentFilters": [
+        {
+          "action": "VIEW",
+          "autoVerify": true,
+          "data": [
+            {
+              "scheme": "https",
+              "host": "quantrion.ai",
+              "pathPrefix": "/"
+            },
+            {
+              "scheme": "https",
+              "host": "www.quantrion.ai",
+              "pathPrefix": "/"
+            }
+          ],
+          "category": ["BROWSABLE", "DEFAULT"]
+        }
+      ]
+    },
+    "web": {
+      "favicon": "./assets/favicon.png"
+    },
+    "plugins": [
+      "expo-secure-store",
+      "expo-font",
+      [
+        "expo-local-authentication",
+        {
+          "faceIDPermission": "Allow Quantrion to use Face ID to unlock your session."
+        }
+      ],
+      [
+        "expo-notifications",
+        {
+          "icon": "./assets/icon.png",
+          "color": "#3B82F6"
+        }
+      ],
+      [
+        "expo-camera",
+        {
+          "cameraPermission": "Allow Quantrion to use your camera for document scan and AI Tutor.",
+          "microphonePermission": "Allow Quantrion to use your microphone for voice doubts.",
+          "recordAudioAndroid": true
+        }
+      ],
+      [
+        "expo-image-picker",
+        {
+          "photosPermission": "Allow Quantrion to access your photos for study uploads."
+        }
+      ]
+    ],
+    "extra": {
+      "apiUrl": "http://localhost:3000",
+      "supabaseUrl": "",
+      "supabaseAnonKey": "",
+      "eas": {
+        "projectId": "replace-with-eas-project-id"
+      }
+    },
+    "owner": "quantrion"
+  }
+}
