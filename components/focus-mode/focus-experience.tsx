@@ -4,6 +4,7 @@ import { useEffect, useMemo, useState } from "react"
 import {
   CheckCircle2,
   Flame,
+  Flower2,
   ListTodo,
   Sparkles,
   Target,
@@ -14,6 +15,7 @@ import { ShellLayout } from "@/components/layout/shell-layout"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { cn } from "@/lib/utils"
+import { MeditationExperience } from "@/components/meditation/meditation-experience"
 import { FocusTimer } from "./focus-timer"
 import {
   FOCUS_GOALS_KEY,
@@ -44,6 +46,7 @@ export function FocusExperience() {
   const [stats, setStats] = useState<FocusStats>(emptyStats())
   const [queue, setQueue] = useState<FocusGoalDraft[]>([])
   const [tipIndex, setTipIndex] = useState(0)
+  const [panel, setPanel] = useState<"focus" | "meditation">("focus")
 
   const technique = useMemo(
     () => FOCUS_TECHNIQUES.find((t) => t.id === techniqueId) ?? FOCUS_TECHNIQUES[0],
@@ -60,6 +63,23 @@ export function FocusExperience() {
       /* ignore */
     }
   }, [])
+
+  useEffect(() => {
+    const applyHash = () => {
+      if (typeof window === "undefined") return
+      setPanel(window.location.hash === "#meditation" ? "meditation" : "focus")
+    }
+    applyHash()
+    window.addEventListener("hashchange", applyHash)
+    return () => window.removeEventListener("hashchange", applyHash)
+  }, [])
+
+  const openPanel = (next: "focus" | "meditation") => {
+    setPanel(next)
+    if (typeof window === "undefined") return
+    const url = next === "meditation" ? "/focus-mode#meditation" : "/focus-mode"
+    window.history.replaceState(null, "", url)
+  }
 
   useEffect(() => {
     const id = window.setInterval(() => {
@@ -141,6 +161,38 @@ export function FocusExperience() {
       subtitle="Student time management — set a goal, pick an effective technique, and protect the clock."
       aiStatus="optimizing"
     >
+      <div className="mb-6 inline-flex rounded-xl border border-border/70 bg-secondary/40 p-1">
+        <button
+          type="button"
+          onClick={() => openPanel("focus")}
+          className={cn(
+            "inline-flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-xs font-medium transition-colors",
+            panel === "focus"
+              ? "bg-violet-500/20 text-violet-100"
+              : "text-muted-foreground hover:text-foreground"
+          )}
+        >
+          <Timer className="h-3.5 w-3.5" />
+          Study focus
+        </button>
+        <button
+          type="button"
+          onClick={() => openPanel("meditation")}
+          className={cn(
+            "inline-flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-xs font-medium transition-colors",
+            panel === "meditation"
+              ? "bg-teal-500/20 text-teal-100"
+              : "text-muted-foreground hover:text-foreground"
+          )}
+        >
+          <Flower2 className="h-3.5 w-3.5" />
+          Meditation
+        </button>
+      </div>
+
+      {panel === "meditation" ? (
+        <MeditationExperience embedded />
+      ) : (
       <div className="space-y-6">
         {/* Hero */}
         <section className="glass-card grid-glow relative overflow-hidden rounded-2xl p-5 md:p-6">
@@ -149,7 +201,7 @@ export function FocusExperience() {
             <div className="max-w-2xl">
               <div className="mb-2 inline-flex items-center gap-2 rounded-full border border-violet-400/25 bg-violet-400/10 px-3 py-1 text-[11px] font-medium text-violet-200">
                 <Timer className="h-3.5 w-3.5" />
-                Intelligence Widget · Time management (not Meditation)
+                Intelligence Widget · Focus Mode
               </div>
               <h2 className="text-xl font-semibold tracking-tight text-foreground md:text-2xl">
                 Focus Mode for serious study blocks
@@ -326,8 +378,8 @@ export function FocusExperience() {
             </p>
             <p className="mt-3 text-sm leading-relaxed text-foreground">{FOCUS_TIPS[tipIndex]}</p>
             <p className="mt-4 text-xs text-muted-foreground">
-              Focus Mode manages attention and time. Use Meditation when you need deep calm and
-              healing — different tools, different jobs.
+              Need deep calm instead of a timed block? Switch to Meditation in this same Focus Mode
+              page.
             </p>
           </div>
         </section>
@@ -370,6 +422,7 @@ export function FocusExperience() {
           </section>
         )}
       </div>
+      )}
     </ShellLayout>
   )
 }

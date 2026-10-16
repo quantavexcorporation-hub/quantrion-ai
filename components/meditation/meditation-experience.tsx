@@ -29,7 +29,7 @@ import {
 } from "./meditation-data"
 import { startSoundscape, stopSoundscape } from "./peaceful-audio"
 
-export function MeditationExperience() {
+export function MeditationExperience({ embedded = false }: { embedded?: boolean }) {
   const [result, setResult] = useState<{
     score: number
     level: StressLevel
@@ -79,15 +79,7 @@ export function MeditationExperience() {
     }, 4500)
   }
 
-  return (
-    <ShellLayout
-      title="Meditation"
-      subtitle="A deep healing sanctuary — peaceful imagery, calm music, and stress relief for a healthier mind."
-      aiStatus="optimizing"
-      hideHeader={Boolean(active)}
-      className={active ? "!p-0 md:!p-0 xl:!p-0" : undefined}
-    >
-      {active ? (
+  const body = active ? (
         <div className="min-h-full bg-background p-4 md:p-6 xl:p-8">
           <BreathingSession
             session={active}
@@ -109,14 +101,14 @@ export function MeditationExperience() {
                 <div className="max-w-2xl">
                   <div className="mb-3 inline-flex items-center gap-2 rounded-full border border-teal-300/25 bg-teal-400/10 px-3 py-1 text-[11px] font-medium text-teal-100">
                     <Flower2 className="h-3.5 w-3.5" />
-                    Intelligence Widget · Deep healing (not Focus Mode)
+                    Focus Mode · Meditation sanctuary
                   </div>
                   <h1 className="text-2xl font-semibold tracking-tight text-white md:text-3xl">
                     Meditation sanctuary
                   </h1>
                   <p className="mt-2 text-sm leading-relaxed text-white/70">
-                    Different from Focus Mode — this space is for healing imagery, peaceful music,
-                    emotional release, and a calm nervous system. Rest first. Study later.
+                    Healing imagery, peaceful music, and a calm nervous system — rest here inside
+                    Focus Mode, then return to study when you feel ready.
                   </p>
                 </div>
                 <div className="grid grid-cols-3 gap-3 sm:min-w-[280px]">
@@ -395,7 +387,19 @@ export function MeditationExperience() {
             </div>
           )}
         </div>
-      )}
+      )
+
+  if (embedded) return body
+
+  return (
+    <ShellLayout
+      title="Meditation"
+      subtitle="A deep healing sanctuary — peaceful imagery, calm music, and stress relief for a healthier mind."
+      aiStatus="optimizing"
+      hideHeader={Boolean(active)}
+      className={active ? "!p-0 md:!p-0 xl:!p-0" : undefined}
+    >
+      {body}
     </ShellLayout>
   )
 }

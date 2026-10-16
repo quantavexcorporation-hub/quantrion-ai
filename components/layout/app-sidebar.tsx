@@ -30,7 +30,6 @@ import {
   ClipboardList,
   Zap,
   Clapperboard,
-  Flower2,
   Orbit,
   Factory,
 } from "lucide-react"
@@ -122,7 +121,6 @@ const NAV_GROUPS: NavGroup[] = [
         href: "/sub-concept-explorer",
         chip: true,
       },
-      { id: "meditation", title: "Meditation", icon: Flower2, href: "/meditation", chip: true },
       { id: "focus", title: "Focus Mode", icon: Timer, href: "/focus-mode", chip: true },
       {
         id: "toppers",
@@ -192,6 +190,7 @@ function useUpgradeUnlocked() {
 }
 
 function isActivePath(pathname: string, href: string) {
+  if (href === "/focus-mode" && (pathname === "/focus-mode" || pathname === "/meditation")) return true
   if (pathname === href) return true
   if (href !== "/" && pathname.startsWith(`${href}/`)) return true
   return false
