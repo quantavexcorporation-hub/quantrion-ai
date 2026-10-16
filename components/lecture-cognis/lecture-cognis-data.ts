@@ -58,7 +58,7 @@ export const DESTINATION_TARGETS = [
   { id: "quicklearn", label: "QuickLearn", href: "/quick-learn" },
   { id: "future", label: "Future of Industries", href: "/future-courses" },
   { id: "industries", label: "Explore Industries", href: "/q2" },
-  { id: "space", label: "Space Economy", href: "/space-economy" },
+  { id: "space", label: "Space Missions", href: "/space-economy" },
 ] as const
 
 export function statusLabel(status: JobStatus) {

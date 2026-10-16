@@ -170,7 +170,7 @@ function SpaceTechHero({ onExplore }: { onExplore: () => void }) {
           animate={{ opacity: 1, y: 0 }}
         >
           <Sparkles className="h-3.5 w-3.5" />
-          Space Economy · Technology Division
+          Space Missions · Technology Division
         </motion.p>
         <motion.h1
           className="text-4xl font-semibold tracking-tight text-white md:text-6xl"
@@ -210,7 +210,7 @@ function SpaceTechHero({ onExplore }: { onExplore: () => void }) {
           >
             <Link href="/space-economy">
               <Orbit className="h-4 w-4" />
-              Space Economy Hub
+              Space Missions Hub
             </Link>
           </Button>
         </motion.div>
@@ -330,13 +330,13 @@ export function SpaceTechnologyExperience() {
             <div className="flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
               <div className="max-w-xl">
                 <p className="text-[11px] font-semibold uppercase tracking-[0.24em] text-cyan-400/90">
-                  Inside Space Economy
+                  Inside Space Missions
                 </p>
                 <h2 className="mt-2 text-2xl font-semibold text-white md:text-3xl">
                   Technology powers the economy above Earth
                 </h2>
                 <p className="mt-3 text-sm leading-relaxed text-slate-400">
-                  Continue into the Space Economy hub for industries, missions, projects, careers,
+                  Continue into the Space Missions hub for industries, missions, projects, careers,
                   and the cinematic map of humanity&apos;s off-world future.
                 </p>
               </div>
@@ -348,7 +348,7 @@ export function SpaceTechnologyExperience() {
                 >
                   <Link href="/space-economy">
                     <BookOpen className="h-4 w-4" />
-                    Open Space Economy
+                    Open Space Missions
                   </Link>
                 </Button>
               </div>

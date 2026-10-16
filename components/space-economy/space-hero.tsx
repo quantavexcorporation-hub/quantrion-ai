@@ -144,7 +144,7 @@ export function SpaceHero({
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.08 }}
         >
-          SPACE ECONOMY
+          SPACE MISSIONS
         </motion.h1>
         <motion.p
           className="mt-5 max-w-xl text-base leading-relaxed text-slate-300 md:text-lg"

@@ -49,7 +49,7 @@ export const PD_CATALOG: readonly PdCategory[] = [
   {
     id: "future-space-economy",
     emoji: "🚀",
-    title: "Space Economy",
+    title: "Space Missions",
     blurb: "Commercial space, orbital industry, and off-world markets.",
     courses: [
       "Introduction to the Space Economy",

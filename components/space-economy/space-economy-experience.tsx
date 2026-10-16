@@ -194,7 +194,7 @@ export function SpaceEconomyExperience() {
             className="scroll-mt-6 space-y-8 rounded-3xl border border-cyan-400/25 bg-gradient-to-b from-cyan-500/[0.07] via-transparent to-transparent p-5 md:p-8"
           >
             <SectionTitle
-              eyebrow="Learn Inside Space Economy"
+              eyebrow="Learn Inside Space Missions"
               title="Space Technology"
               subtitle="The engineering curriculum of the space age — rockets, satellites, orbitals, Moon & Mars programs, and mission-ready modules. This is where students learn the technology that powers the space economy."
             />
@@ -228,7 +228,7 @@ export function SpaceEconomyExperience() {
           <section ref={timelineRef} className="scroll-mt-6">
             <SectionTitle
               eyebrow="Section 01"
-              title="The Space Economy Timeline"
+              title="The Space Missions Timeline"
               subtitle="From Sputnik to Mars colonies — click any milestone to expand the economic story."
             />
             <div className="relative">
@@ -610,7 +610,7 @@ export function SpaceEconomyExperience() {
           <section>
             <SectionTitle
               eyebrow="Section 07"
-              title="Space Economy Numbers"
+              title="Space Missions Numbers"
               subtitle="Order-of-magnitude signals of a trillion-dollar frontier."
             />
             <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
@@ -843,7 +843,7 @@ export function SpaceEconomyExperience() {
           <section>
             <SectionTitle
               eyebrow="Section 11"
-              title="Space Economy Daily"
+              title="Space Missions Daily"
               subtitle="A premium intelligence feed — filter by domain (UI preview)."
             />
             <div className="mb-5 flex flex-wrap gap-2">

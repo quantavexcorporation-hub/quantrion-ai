@@ -63,7 +63,7 @@ const NAV_GROUPS: NavGroup[] = [
     items: [
       {
         id: "space-economy",
-        title: "Space Economy",
+        title: "Space Missions",
         icon: Orbit,
         href: "/space-economy",
       },
