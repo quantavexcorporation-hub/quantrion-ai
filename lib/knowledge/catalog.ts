@@ -107,14 +107,51 @@ export function getKnowledgeEntry(kind: KnowledgeKind, slug: string) {
   return (kind === "exam" ? examBySlug : courseBySlug).get(slug) ?? null
 }
 
+export function knowledgeHref(entry: KnowledgeEntry) {
+  return entry.kind === "exam" ? `/exams/${entry.slug}` : `/courses/${entry.slug}`
+}
+
 export function examHref(name: string) {
   const entry = examByName.get(name)
   return entry ? `/exams/${entry.slug}` : "/q1"
 }
 
-export function courseHref(name: string) {
+export function courseHref(name: string, categoryId?: string) {
+  if (categoryId) {
+    const exact = catalog.courses.find((item) => item.name === name && item.categoryId === categoryId)
+    if (exact) return `/courses/${exact.slug}`
+  }
   const entry = courseByName.get(name)
   return entry ? `/courses/${entry.slug}` : "/q2"
+}
+
+export function searchKnowledge(query: string, limit = 8) {
+  const q = query.trim().toLowerCase()
+  if (q.length < 2) return []
+  const pool = [...catalog.exams, ...catalog.courses]
+  return pool
+    .map((entry) => {
+      const name = entry.name.toLowerCase()
+      const category = entry.category.toLowerCase()
+      const detail = entry.detail.toLowerCase()
+      let score = 0
+      if (name === q) score = 100
+      else if (name.startsWith(q)) score = 80
+      else if (name.includes(q)) score = 60
+      else if (category.includes(q) || detail.includes(q)) score = 30
+      return { entry, score }
+    })
+    .filter((item) => item.score > 0)
+    .sort((a, b) => b.score - a.score || a.entry.name.localeCompare(b.entry.name))
+    .slice(0, limit)
+    .map((item) => item.entry)
+}
+
+const FEATURED_NAMES = ["JEE Main", "NEET-UG", "UPSC CSE", "CAT", "Introduction to Space Economy", "Astronomy Fundamentals"]
+
+export function featuredKnowledge() {
+  const pool = [...catalog.exams, ...catalog.courses]
+  return FEATURED_NAMES.map((name) => pool.find((entry) => entry.name === name)).filter((entry): entry is KnowledgeEntry => Boolean(entry))
 }
 
 export function relatedEntries(entry: KnowledgeEntry, limit = 6) {

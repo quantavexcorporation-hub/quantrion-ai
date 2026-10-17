@@ -144,10 +144,7 @@ export function QrionCourseCatalog({
               <button
                 key={tab.id}
                 type="button"
-                onClick={() => {
-                  setPillar(tab.id)
-                  setSelectedCourse(null)
-                }}
+                onClick={() => setPillar(tab.id)}
                 className={cn(
                   "inline-flex items-center gap-1.5 rounded-full border px-3.5 py-1.5 text-xs font-medium transition-colors",
                   on
@@ -201,10 +198,7 @@ export function QrionCourseCatalog({
                   cat={cat}
                   active={active?.id === cat.id}
                   accent={accent}
-                  onSelect={() => {
-                    setActiveId(cat.id)
-                    setSelectedCourse(null)
-                  }}
+                  onSelect={() => setActiveId(cat.id)}
                 />
               ))}
               {filteredCategories.length === 0 && (
@@ -260,7 +254,7 @@ export function QrionCourseCatalog({
                     {active.courses.map((course, i) => (
                         <Link
                           key={course}
-                          href={courseHref(course)}
+                          href={courseHref(course, active.id)}
                           className="group rounded-xl border border-border/50 bg-background/40 px-3.5 py-3.5 text-left transition-all hover:border-border hover:bg-secondary/30"
                         >
                           <div className="flex items-start gap-2">

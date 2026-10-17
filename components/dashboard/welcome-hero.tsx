@@ -1,8 +1,10 @@
 "use client"
 
+import Link from "next/link"
 import { BookOpen, MonitorPlay, Sparkles, Target } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { useAuth } from "@/context/AuthContext"
+import { useUser } from "@/context/SupabaseAuthProvider"
 import { dashboardMission } from "./command-data"
 
 interface WelcomeHeroProps {
@@ -19,6 +21,11 @@ function greeting() {
 
 export function WelcomeHero({ userName, exam = "JEE Advanced 2024" }: WelcomeHeroProps) {
   const { requireAuth } = useAuth()
+  const { isAuthenticated, profile, user } = useUser()
+  const signedInName =
+    profile?.name || user?.user_metadata?.name || user?.email?.split("@")[0] || userName
+  const name = isAuthenticated ? signedInName : "there"
+  const examLine = isAuthenticated ? `Preparing for ${exam}` : "Browse the public exam and course reference"
 
   return (
     <div className="space-y-5">
@@ -27,9 +34,9 @@ export function WelcomeHero({ userName, exam = "JEE Advanced 2024" }: WelcomeHer
           Welcome intelligence
         </p>
         <h1 className="text-2xl font-semibold tracking-tight text-foreground sm:text-3xl md:text-4xl">
-          {greeting()}, <span className="text-primary">{userName}</span>
+          {greeting()}, <span className="text-primary">{name}</span>
         </h1>
-        <p className="mt-1.5 text-sm text-muted-foreground">Preparing for {exam}</p>
+        <p className="mt-1.5 text-sm text-muted-foreground">{examLine}</p>
 
         <div className="mt-5 q-surface rounded-xl p-4">
           <div className="mb-2 flex items-center gap-2">
@@ -38,29 +45,58 @@ export function WelcomeHero({ userName, exam = "JEE Advanced 2024" }: WelcomeHer
             </div>
             <span className="text-sm font-medium text-foreground">Today&apos;s AI Recommendation</span>
           </div>
-          <p className="text-sm leading-relaxed text-muted-foreground">
-            You are{" "}
-            <span className="font-semibold text-foreground">{dashboardMission.readinessToday}% ready</span>{" "}
-            for today&apos;s learning goal. Focus on Integration Techniques and revise Thermodynamics —
-            optimal window 9–11 AM.
-          </p>
+          {isAuthenticated ? (
+            <p className="text-sm leading-relaxed text-muted-foreground">
+              You are{" "}
+              <span className="font-semibold text-foreground">{dashboardMission.readinessToday}% ready</span>{" "}
+              for today&apos;s learning goal. Focus on Integration Techniques and revise Thermodynamics —
+              optimal window 9–11 AM.
+            </p>
+          ) : (
+            <p className="text-sm leading-relaxed text-muted-foreground">
+              Start with one exam or course reference. Read the pathway, open related titles, and come back when
+              full prep opens.
+            </p>
+          )}
         </div>
 
         <div className="mt-4 flex flex-wrap gap-2">
-          <Button size="sm" className="gap-1.5" onClick={() => requireAuth("/learn", "login")}>
-            <BookOpen className="h-3.5 w-3.5" /> Continue Learning
-          </Button>
-          <Button size="sm" variant="outline" className="gap-1.5" onClick={() => requireAuth("/tests", "login")}>
-            <MonitorPlay className="h-3.5 w-3.5" /> Take Mock Test
-          </Button>
-          <Button
-            size="sm"
-            variant="outline"
-            className="gap-1.5"
-            onClick={() => requireAuth("/study-material", "login")}
-          >
-            <Target className="h-3.5 w-3.5" /> Revise Weak Topics
-          </Button>
+          {isAuthenticated ? (
+            <>
+              <Button size="sm" className="gap-1.5" onClick={() => requireAuth("/learn", "login")}>
+                <BookOpen className="h-3.5 w-3.5" /> Continue Learning
+              </Button>
+              <Button size="sm" variant="outline" className="gap-1.5" onClick={() => requireAuth("/tests", "login")}>
+                <MonitorPlay className="h-3.5 w-3.5" /> Take Mock Test
+              </Button>
+              <Button
+                size="sm"
+                variant="outline"
+                className="gap-1.5"
+                onClick={() => requireAuth("/study-material", "login")}
+              >
+                <Target className="h-3.5 w-3.5" /> Revise Weak Topics
+              </Button>
+            </>
+          ) : (
+            <>
+              <Button size="sm" className="gap-1.5" asChild>
+                <Link href="/q1">
+                  <BookOpen className="h-3.5 w-3.5" /> Browse exams
+                </Link>
+              </Button>
+              <Button size="sm" variant="outline" className="gap-1.5" asChild>
+                <Link href="/space-economy">
+                  <MonitorPlay className="h-3.5 w-3.5" /> Space Missions
+                </Link>
+              </Button>
+              <Button size="sm" variant="outline" className="gap-1.5" asChild>
+                <Link href="/personal-development">
+                  <Target className="h-3.5 w-3.5" /> Personal development
+                </Link>
+              </Button>
+            </>
+          )}
         </div>
       </div>
     </div>

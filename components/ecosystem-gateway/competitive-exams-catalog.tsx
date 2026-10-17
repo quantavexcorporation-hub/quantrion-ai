@@ -96,10 +96,7 @@ export function CompetitiveExamsCatalog({
               key={r}
               size="sm"
               variant="outline"
-              onClick={() => {
-                setRegion(r)
-                setSelectedExam(null)
-              }}
+              onClick={() => setRegion(r)}
               className={cn(
                 "rounded-full border-border/60 bg-transparent text-xs",
                 on ? "text-foreground" : "text-muted-foreground",
@@ -143,10 +140,7 @@ export function CompetitiveExamsCatalog({
                   <button
                     key={cat.id}
                     type="button"
-                    onClick={() => {
-                      setActiveId(cat.id)
-                      setSelectedExam(null)
-                    }}
+                    onClick={() => setActiveId(cat.id)}
                     className={cn(
                       "mb-1 flex w-full items-center gap-2.5 rounded-xl px-3 py-2.5 text-left transition-colors",
                       on

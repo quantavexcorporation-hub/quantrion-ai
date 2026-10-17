@@ -1,7 +1,7 @@
 "use client"
 
-import { Search, Cpu, Zap, Bell, Settings, Menu } from "lucide-react"
-import { Input } from "@/components/ui/input"
+import { Cpu, Zap, Bell, Settings, Menu } from "lucide-react"
+import { KnowledgeSearch } from "@/components/knowledge/knowledge-search"
 import { Button } from "@/components/ui/button"
 import { StatusDot } from "@/components/ui/status-badge"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
@@ -57,16 +57,7 @@ export function TopBar({
       </Button>
 
       <div className="min-w-0 max-w-lg flex-1">
-        <div className="relative">
-          <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
-          <Input
-            placeholder="Ask AI or search..."
-            className="h-9 border-border/60 bg-secondary/40 pl-10 pr-3 text-sm placeholder:text-muted-foreground transition-colors focus-visible:border-primary/40 focus-visible:ring-primary/30 md:pr-12"
-          />
-          <kbd className="absolute right-3 top-1/2 hidden -translate-y-1/2 rounded border border-border/60 bg-secondary/80 px-1.5 py-0.5 font-mono text-[10px] text-muted-foreground md:block">
-            ⌘ K
-          </kbd>
-        </div>
+        <KnowledgeSearch placeholder="Search exams and courses" />
       </div>
 
       <div className="mx-4 hidden items-center gap-4 xl:flex">

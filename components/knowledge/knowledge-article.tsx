@@ -5,16 +5,8 @@ import Link from "next/link"
 import { ArrowLeft, BookOpen, Sparkles } from "lucide-react"
 import { ShellLayout } from "@/components/layout/shell-layout"
 import type { KnowledgeEntry } from "@/lib/knowledge/catalog"
-import { courseHref, examHref } from "@/lib/knowledge/catalog"
-
-type Brief = {
-  overview: string
-  whoItIsFor: string
-  structure: string
-  topics: string[]
-  howToPrepare: string
-  watchOuts: string
-}
+import { knowledgeHref } from "@/lib/knowledge/catalog"
+import { localBrief, type KnowledgeBrief } from "@/lib/knowledge/local-brief"
 
 export function KnowledgeArticle({
   entry,
@@ -23,34 +15,32 @@ export function KnowledgeArticle({
   entry: KnowledgeEntry
   related: KnowledgeEntry[]
 }) {
-  const [brief, setBrief] = useState<Brief | null>(null)
-  const [status, setStatus] = useState<"loading" | "ready" | "fallback">("loading")
+  const [brief, setBrief] = useState<KnowledgeBrief>(() => localBrief(entry, related))
+  const [source, setSource] = useState<"atlas" | "ai">("atlas")
   const backHref = entry.hub
 
   useEffect(() => {
     let cancelled = false
+    setBrief(localBrief(entry, related))
+    setSource("atlas")
     async function load() {
       try {
         const res = await fetch(`/api/knowledge?kind=${entry.kind}&slug=${entry.slug}`)
         const json = await res.json()
         if (cancelled) return
         if (json?.brief?.overview) {
-          setBrief(json.brief as Brief)
-          setStatus("ready")
-        } else {
-          setStatus("fallback")
+          setBrief(json.brief as KnowledgeBrief)
+          setSource("ai")
         }
       } catch {
-        if (!cancelled) setStatus("fallback")
+        if (!cancelled) setSource("atlas")
       }
     }
     void load()
     return () => {
       cancelled = true
     }
-  }, [entry.kind, entry.slug])
-
-  const hrefFor = (item: KnowledgeEntry) => (item.kind === "exam" ? examHref(item.name) : courseHref(item.name))
+  }, [entry, related])
 
   return (
     <ShellLayout
@@ -81,10 +71,9 @@ export function KnowledgeArticle({
         <section className="glass-card rounded-2xl p-5 md:p-6">
           <div className="mb-3 flex items-center gap-2 text-sm font-medium text-foreground">
             <Sparkles className="h-4 w-4 text-sky-300" />
-            {status === "ready" ? "AI reference" : status === "loading" ? "Writing the reference…" : "Atlas notes"}
+            {source === "ai" ? "AI reference" : "Quantrion reference"}
           </div>
-          {brief ? (
-            <div className="space-y-4 text-sm leading-relaxed text-muted-foreground">
+          <div className="space-y-4 text-sm leading-relaxed text-muted-foreground">
               <p className="whitespace-pre-line text-foreground">{brief.overview}</p>
               <div>
                 <h2 className="font-semibold text-foreground">Who it is for</h2>
@@ -112,18 +101,7 @@ export function KnowledgeArticle({
                 <h2 className="font-semibold text-foreground">Watch-outs</h2>
                 <p className="mt-1">{brief.watchOuts}</p>
               </div>
-            </div>
-          ) : (
-            <div className="space-y-3 text-sm leading-relaxed text-muted-foreground">
-              <p>
-                <span className="font-medium text-foreground">{entry.name}</span> sits in {entry.category}. {entry.detail}.
-              </p>
-              <p>
-                Use this page to understand the pathway before a Quantrion course opens. Official brochures remain the source for dates, fees, and cutoffs.
-              </p>
-              {status === "loading" && <p className="text-sky-300">Quantrion AI is expanding this into a full study note…</p>}
-            </div>
-          )}
+          </div>
         </section>
 
         {related.length > 0 && (
@@ -135,7 +113,7 @@ export function KnowledgeArticle({
               {related.map((item) => (
                 <Link
                   key={item.slug}
-                  href={hrefFor(item)}
+                  href={knowledgeHref(item)}
                   className="rounded-xl border border-border/60 bg-card/40 px-3 py-3 text-sm text-foreground hover:border-sky-400/40"
                 >
                   {item.name}

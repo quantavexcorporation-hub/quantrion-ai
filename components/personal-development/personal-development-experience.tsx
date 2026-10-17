@@ -340,10 +340,7 @@ export function PersonalDevelopmentExperience() {
                         <button
                           key={cat.id}
                           type="button"
-                          onClick={() => {
-                            setActiveId(cat.id)
-                            setSelectedCourse(null)
-                          }}
+                          onClick={() => setActiveId(cat.id)}
                           className={cn(
                             "mb-1 flex w-full items-center gap-2.5 rounded-xl px-3 py-2.5 text-left transition-colors",
                             on
@@ -413,7 +410,7 @@ export function PersonalDevelopmentExperience() {
                           {active.courses.map((course, i) => (
                               <Link
                                 key={course}
-                                href={courseHref(course)}
+                                href={courseHref(course, active.id)}
                                 className="group rounded-xl border border-white/10 bg-white/[0.03] px-3.5 py-3.5 text-left transition-all hover:border-teal-400/25 hover:bg-white/[0.06]"
                               >
                                 <div className="flex items-start gap-2">

@@ -25,6 +25,7 @@ import { ProductivityGoalsMotivation } from "@/components/dashboard/productivity
 import { QuickActionsGrid } from "@/components/dashboard/quick-actions-grid"
 import { FloatingAIInsights } from "@/components/dashboard/floating-ai-insights"
 import { PromoTopRow } from "@/components/dashboard/promo-right-rail"
+import { ReferenceAtlas } from "@/components/knowledge/reference-atlas"
 
 function Fade({ children, delay = 0 }: { children: ReactNode; delay?: number }) {
   return (
@@ -59,6 +60,10 @@ export function DashboardCommandCenter({
           <main className="q-main-canvas min-w-0 flex-1 overflow-y-auto overflow-x-hidden">
             <div className="mx-auto max-w-5xl space-y-6 p-3 sm:space-y-8 sm:p-4 md:p-6 xl:p-8">
               <Fade>
+                <ReferenceAtlas />
+              </Fade>
+
+              <Fade delay={20}>
                 <WelcomeHero userName={userName} exam={exam} />
               </Fade>
 
