@@ -1,6 +1,7 @@
 "use client"
 
 import { useEffect, useMemo, useRef, useState } from "react"
+import Link from "next/link"
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion"
 import {
   ArrowRight,
@@ -18,6 +19,7 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { cn } from "@/lib/utils"
 import { PD_CATALOG, PD_PATHS, PD_TOTAL_COURSES, type PdCategory } from "./pd-data"
+import { courseHref } from "@/lib/knowledge/catalog"
 import { AiEmploymentPanel } from "@/components/ai-employment/ai-employment-panel"
 
 const ACCENT = "#2dd4bf"
@@ -206,7 +208,6 @@ export function PersonalDevelopmentExperience() {
   const labRef = useRef<HTMLDivElement>(null)
   const [activeId, setActiveId] = useState(PD_CATALOG[0].id)
   const [query, setQuery] = useState("")
-  const [selectedCourse, setSelectedCourse] = useState<string | null>(null)
   const [pathId, setPathId] = useState<(typeof PD_PATHS)[number]["id"]>("ai-frontier")
   const reduce = useReducedMotion()
 
@@ -409,51 +410,28 @@ export function PersonalDevelopmentExperience() {
                         </div>
 
                         <div className="grid gap-2 sm:grid-cols-2 xl:grid-cols-3">
-                          {active.courses.map((course, i) => {
-                            const open = selectedCourse === course
-                            return (
-                              <button
+                          {active.courses.map((course, i) => (
+                              <Link
                                 key={course}
-                                type="button"
-                                onClick={() => setSelectedCourse(open ? null : course)}
-                                className={cn(
-                                  "group rounded-xl border px-3.5 py-3.5 text-left transition-all",
-                                  open
-                                    ? "border-teal-400/40 bg-teal-500/10 shadow-lg"
-                                    : "border-white/10 bg-white/[0.03] hover:border-teal-400/25 hover:bg-white/[0.06]",
-                                )}
+                                href={courseHref(course)}
+                                className="group rounded-xl border border-white/10 bg-white/[0.03] px-3.5 py-3.5 text-left transition-all hover:border-teal-400/25 hover:bg-white/[0.06]"
                               >
                                 <div className="flex items-start gap-2">
-                                  <span
-                                    className={cn(
-                                      "mt-0.5 font-mono text-[10px] tabular-nums text-slate-500",
-                                      open && "text-teal-300",
-                                    )}
-                                  >
+                                  <span className="mt-0.5 font-mono text-[10px] tabular-nums text-slate-500">
                                     {String(i + 1).padStart(2, "0")}
                                   </span>
                                   <div className="min-w-0 flex-1">
                                     <p className="text-sm font-medium leading-snug text-white">
                                       {course}
                                     </p>
-                                    {open && (
-                                      <p className="mt-2 text-xs leading-relaxed text-slate-400">
-                                        Elite development module inside {active.title}. Build
-                                        durable skills, daily systems, and identity-level change —
-                                        not temporary motivation.
-                                      </p>
-                                    )}
+                                    <p className="mt-2 text-[11px] font-medium text-teal-300">
+                                      Open reference
+                                    </p>
                                   </div>
-                                  <ChevronRight
-                                    className={cn(
-                                      "mt-0.5 h-3.5 w-3.5 shrink-0 text-slate-500 transition-transform",
-                                      open && "rotate-90 text-teal-300",
-                                    )}
-                                  />
+                                  <ChevronRight className="mt-0.5 h-3.5 w-3.5 shrink-0 text-slate-500" />
                                 </div>
-                              </button>
-                            )
-                          })}
+                              </Link>
+                            ))}
                         </div>
                       </motion.div>
                     ) : (

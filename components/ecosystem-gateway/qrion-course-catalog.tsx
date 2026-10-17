@@ -1,6 +1,7 @@
 "use client"
 
-import { useEffect, useMemo, useState, type CSSProperties } from "react"
+import { useEffect, useMemo, useState } from "react"
+import Link from "next/link"
 import { AnimatePresence, motion } from "framer-motion"
 import { BookOpen, ChevronRight, Factory, Layers3, Orbit, Search } from "lucide-react"
 import { Input } from "@/components/ui/input"
@@ -13,6 +14,7 @@ import {
   type CoursePillar,
   type SpaceCourseCategory,
 } from "./qrion-space-catalog"
+import { courseHref } from "@/lib/knowledge/catalog"
 
 type PillarFilter = "all" | CoursePillar
 
@@ -34,7 +36,6 @@ export function QrionCourseCatalog({
     return first?.id ?? SPACE_INDUSTRIAL_CATALOG[0].id
   })
   const [localQuery, setLocalQuery] = useState("")
-  const [selectedCourse, setSelectedCourse] = useState<string | null>(null)
 
   useEffect(() => {
     if (lockedPillar) setPillar(lockedPillar)
@@ -256,56 +257,28 @@ export function QrionCourseCatalog({
                   </div>
 
                   <div className="grid gap-2 sm:grid-cols-2 xl:grid-cols-3">
-                    {active.courses.map((course, i) => {
-                      const open = selectedCourse === course
-                      return (
-                        <button
+                    {active.courses.map((course, i) => (
+                        <Link
                           key={course}
-                          type="button"
-                          onClick={() => setSelectedCourse(open ? null : course)}
-                          className={cn(
-                            "group rounded-xl border px-3.5 py-3.5 text-left transition-all",
-                            open
-                              ? "border-transparent shadow-lg"
-                              : "border-border/50 bg-background/40 hover:border-border hover:bg-secondary/30",
-                          )}
-                          style={
-                            {
-                              background: open
-                                ? `linear-gradient(145deg, color-mix(in oklab, ${accent} 16%, transparent), color-mix(in oklab, ${accent} 4%, transparent))`
-                                : undefined,
-                            } as CSSProperties
-                          }
+                          href={courseHref(course)}
+                          className="group rounded-xl border border-border/50 bg-background/40 px-3.5 py-3.5 text-left transition-all hover:border-border hover:bg-secondary/30"
                         >
                           <div className="flex items-start gap-2">
-                            <span
-                              className="mt-0.5 font-mono text-[10px] tabular-nums text-muted-foreground/80"
-                              style={open ? { color: accent } : undefined}
-                            >
+                            <span className="mt-0.5 font-mono text-[10px] tabular-nums text-muted-foreground/80">
                               {String(i + 1).padStart(2, "0")}
                             </span>
                             <div className="min-w-0 flex-1">
                               <p className="text-sm font-medium leading-snug text-foreground">
                                 {course}
                               </p>
-                              {open && (
-                                <p className="mt-2 text-xs leading-relaxed text-muted-foreground">
-                                  Elite track module inside {active.title}. Build literacy, systems
-                                  intuition, and career-ready fluency for the space–industrial era.
-                                </p>
-                              )}
+                              <p className="mt-2 text-[11px] font-medium" style={{ color: accent }}>
+                                Open reference
+                              </p>
                             </div>
-                            <ChevronRight
-                              className={cn(
-                                "mt-0.5 h-3.5 w-3.5 shrink-0 text-muted-foreground transition-transform",
-                                open && "rotate-90",
-                              )}
-                              style={open ? { color: accent } : undefined}
-                            />
+                            <ChevronRight className="mt-0.5 h-3.5 w-3.5 shrink-0 text-muted-foreground" />
                           </div>
-                        </button>
-                      )
-                    })}
+                        </Link>
+                      ))}
                   </div>
                 </motion.div>
               ) : (

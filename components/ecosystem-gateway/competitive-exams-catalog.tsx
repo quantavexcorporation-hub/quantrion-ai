@@ -1,6 +1,7 @@
 "use client"
 
 import { useEffect, useMemo, useState } from "react"
+import Link from "next/link"
 import { AnimatePresence, motion } from "framer-motion"
 import { BookOpen, ChevronRight, Layers3, Search } from "lucide-react"
 import { Input } from "@/components/ui/input"
@@ -12,6 +13,7 @@ import {
   TOTAL_EXAMS,
   type ExamCategory,
 } from "./exam-catalog"
+import { examHref } from "@/lib/knowledge/catalog"
 
 export function CompetitiveExamsCatalog({
   accent,
@@ -23,7 +25,6 @@ export function CompetitiveExamsCatalog({
   const [region, setRegion] = useState<(typeof EXAM_REGIONS)[number]>("All")
   const [activeId, setActiveId] = useState(EXAM_CATALOG[0].id)
   const [localQuery, setLocalQuery] = useState("")
-  const [selectedExam, setSelectedExam] = useState<string | null>(null)
 
   const query = (externalQuery || localQuery).trim().toLowerCase()
 
@@ -218,32 +219,14 @@ export function CompetitiveExamsCatalog({
                   </div>
 
                   <div className="grid gap-2 sm:grid-cols-2 xl:grid-cols-3">
-                    {active.exams.map((exam, i) => {
-                      const open = selectedExam === exam.name
-                      return (
-                        <button
+                    {active.exams.map((exam, i) => (
+                        <Link
                           key={exam.name}
-                          type="button"
-                          onClick={() => setSelectedExam(open ? null : exam.name)}
-                          className={cn(
-                            "rounded-xl border px-3.5 py-3.5 text-left transition-all",
-                            open
-                              ? "border-transparent shadow-lg"
-                              : "border-border/50 bg-background/40 hover:border-border hover:bg-secondary/30",
-                          )}
-                          style={
-                            open
-                              ? {
-                                  background: `linear-gradient(145deg, color-mix(in oklab, ${accent} 16%, transparent), color-mix(in oklab, ${accent} 4%, transparent))`,
-                                }
-                              : undefined
-                          }
+                          href={examHref(exam.name)}
+                          className="rounded-xl border border-border/50 bg-background/40 px-3.5 py-3.5 text-left transition-all hover:border-border hover:bg-secondary/30"
                         >
                           <div className="flex items-start gap-2">
-                            <span
-                              className="mt-0.5 font-mono text-[10px] tabular-nums text-muted-foreground/80"
-                              style={open ? { color: accent } : undefined}
-                            >
+                            <span className="mt-0.5 font-mono text-[10px] tabular-nums text-muted-foreground/80">
                               {String(i + 1).padStart(2, "0")}
                             </span>
                             <div className="min-w-0 flex-1">
@@ -251,25 +234,14 @@ export function CompetitiveExamsCatalog({
                                 {exam.name}
                               </p>
                               <p className="mt-1 text-[11px] text-muted-foreground">{exam.detail}</p>
-                              {open && (
-                                <p className="mt-2 text-xs leading-relaxed text-muted-foreground">
-                                  High-reputation exam with large annual preparation cohorts.
-                                  Quantrion Competitive Exams maps adaptive practice, strategy, and
-                                  readiness signals for pathways like {exam.name}.
-                                </p>
-                              )}
+                              <p className="mt-2 text-[11px] font-medium" style={{ color: accent }}>
+                                Open reference
+                              </p>
                             </div>
-                            <ChevronRight
-                              className={cn(
-                                "mt-0.5 h-3.5 w-3.5 shrink-0 text-muted-foreground transition-transform",
-                                open && "rotate-90",
-                              )}
-                              style={open ? { color: accent } : undefined}
-                            />
+                            <ChevronRight className="mt-0.5 h-3.5 w-3.5 shrink-0 text-muted-foreground" />
                           </div>
-                        </button>
-                      )
-                    })}
+                        </Link>
+                      ))}
                   </div>
                 </motion.div>
               ) : (
