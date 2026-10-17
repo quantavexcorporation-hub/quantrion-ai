@@ -126,3 +126,8 @@ export const KNOWLEDGE_COUNTS = {
   exams: catalog.exams.length,
   courses: catalog.courses.length,
 }
+
+export function knowledgeSlugs(kind: KnowledgeKind) {
+  const pool = kind === "exam" ? catalog.exams : catalog.courses
+  return pool.map((entry) => entry.slug)
+}

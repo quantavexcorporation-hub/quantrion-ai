@@ -19,6 +19,28 @@ function isKind(value: string): value is KnowledgeKind {
   return value === "exam" || value === "course"
 }
 
+function parseBrief(text: string): KnowledgeBrief | null {
+  const fenced = text.match(/```(?:json)?\s*([\s\S]*?)```/)
+  const raw = (fenced?.[1] ?? text).trim()
+  const start = raw.indexOf("{")
+  const end = raw.lastIndexOf("}")
+  if (start < 0 || end <= start) return null
+  try {
+    const parsed = JSON.parse(raw.slice(start, end + 1)) as KnowledgeBrief
+    if (!parsed.overview || !Array.isArray(parsed.topics)) return null
+    return {
+      overview: String(parsed.overview),
+      whoItIsFor: String(parsed.whoItIsFor ?? ""),
+      structure: String(parsed.structure ?? ""),
+      topics: parsed.topics.map(String).filter(Boolean).slice(0, 8),
+      howToPrepare: String(parsed.howToPrepare ?? ""),
+      watchOuts: String(parsed.watchOuts ?? ""),
+    }
+  } catch {
+    return null
+  }
+}
+
 export async function GET(req: Request) {
   const url = new URL(req.url)
   const kind = url.searchParams.get("kind") ?? ""
@@ -42,7 +64,7 @@ export async function GET(req: Request) {
     const client = getAnthropicClient()
     const res = await client.messages.create({
       model: "claude-3-5-sonnet-latest",
-      max_tokens: 900,
+      max_tokens: 1400,
       temperature: 0.2,
       system:
         "You write concise, factual education reference notes for students. Output ONLY valid JSON. No markdown.",
@@ -74,10 +96,8 @@ Do not invent exact dates, cutoffs, or fees. If unsure, say the official brochur
       .map((block) => block.text)
       .join("\n")
       .trim()
-    const parsed = JSON.parse(text) as KnowledgeBrief
-    if (!parsed.overview || !Array.isArray(parsed.topics)) {
-      return NextResponse.json({ brief: null, source: "invalid" })
-    }
+    const parsed = parseBrief(text)
+    if (!parsed) return NextResponse.json({ brief: null, source: "invalid" })
     cache.set(key, parsed)
     return NextResponse.json({ brief: parsed, source: "ai" })
   } catch {
