@@ -3,7 +3,9 @@
 import Link from "next/link"
 import { BookOpen, MonitorPlay, Sparkles, Target } from "lucide-react"
 import { Button } from "@/components/ui/button"
+import { useEffect, useState } from "react"
 import { useAuth } from "@/context/AuthContext"
+import { readFocus } from "@/components/knowledge/prep-interest"
 import { useUser } from "@/context/SupabaseAuthProvider"
 import { dashboardMission } from "./command-data"
 
@@ -24,8 +26,16 @@ export function WelcomeHero({ userName, exam = "JEE Advanced 2024" }: WelcomeHer
   const { isAuthenticated, profile, user } = useUser()
   const signedInName =
     profile?.name || user?.user_metadata?.name || user?.email?.split("@")[0] || userName
+  const [focus, setFocus] = useState<string | null>(null)
+  useEffect(() => {
+    setFocus(readFocus())
+  }, [])
   const name = isAuthenticated ? signedInName : "there"
-  const examLine = isAuthenticated ? `Preparing for ${exam}` : "Browse the public exam and course reference"
+  const examLine = isAuthenticated
+    ? `Preparing for ${exam}`
+    : focus
+      ? `You marked ${focus}. Open its reference and read the official notice before you apply.`
+      : "Browse the public exam and course reference"
 
   return (
     <div className="space-y-5">

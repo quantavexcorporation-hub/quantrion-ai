@@ -26,6 +26,7 @@ import { QuickActionsGrid } from "@/components/dashboard/quick-actions-grid"
 import { FloatingAIInsights } from "@/components/dashboard/floating-ai-insights"
 import { PromoTopRow } from "@/components/dashboard/promo-right-rail"
 import { ReferenceAtlas } from "@/components/knowledge/reference-atlas"
+import { useUser } from "@/context/SupabaseAuthProvider"
 
 function Fade({ children, delay = 0 }: { children: ReactNode; delay?: number }) {
   return (
@@ -44,6 +45,9 @@ export function DashboardCommandCenter({
   userName = "Arjun",
   exam = "JEE Advanced 2024",
 }: DashboardCommandCenterProps) {
+  const { isAuthenticated, loading } = useUser()
+  const showStudyDesk = isAuthenticated && !loading
+
   return (
     <div className="flex h-dvh max-h-dvh overflow-hidden bg-background">
       <AppSidebar />
@@ -67,6 +71,8 @@ export function DashboardCommandCenter({
                 <WelcomeHero userName={userName} exam={exam} />
               </Fade>
 
+              {showStudyDesk && (
+                <>
               <Fade delay={40}>
                 <ActionCards />
               </Fade>
@@ -146,8 +152,11 @@ export function DashboardCommandCenter({
               <Fade delay={300}>
                 <ProductivityGoalsMotivation />
               </Fade>
+                </>
+              )}
             </div>
 
+            {showStudyDesk && (
             <StatsFooter
               totalStudyHours={127}
               hoursThisWeek={12}
@@ -158,11 +167,12 @@ export function DashboardCommandCenter({
               aiPrediction={847}
               maxScore={1000}
             />
+            )}
           </main>
         </div>
       </div>
 
-      <FloatingAIInsights />
+      {showStudyDesk && <FloatingAIInsights />}
     </div>
   )
 }

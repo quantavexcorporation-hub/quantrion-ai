@@ -1,4 +1,5 @@
 import type { KnowledgeEntry } from "@/lib/knowledge/catalog"
+import { getCurated } from "@/lib/knowledge/curated"
 
 export type KnowledgeBrief = {
   overview: string
@@ -10,6 +11,9 @@ export type KnowledgeBrief = {
 }
 
 export function localBrief(entry: KnowledgeEntry, related: KnowledgeEntry[]): KnowledgeBrief {
+  const curated = getCurated(entry.slug)
+  if (curated) return curated
+
   const place = entry.region ? `${entry.category} (${entry.region})` : entry.category
   const neighbors = related.slice(0, 3).map((item) => item.name)
   const neighborLine =

@@ -12,6 +12,9 @@ next.user-config.*
 .env.*
 !.env.example
 
+# Waitlist captured on a local dev server
+data/
+
 # LectureCognis generated media (scripts/audio packs)
 public/lecture-cognis/jobs/
 public/lecture-forge/jobs/

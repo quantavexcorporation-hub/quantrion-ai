@@ -82,11 +82,8 @@ export function TopBar({
         <Button variant="ghost" size="icon" className="hidden h-8 w-8 text-muted-foreground hover:text-foreground sm:inline-flex">
           <Settings className="h-4 w-4" />
         </Button>
-        <Button variant="ghost" size="icon" className="relative h-8 w-8 text-muted-foreground hover:text-foreground">
+        <Button variant="ghost" size="icon" className="relative h-8 w-8 text-muted-foreground hover:text-foreground" aria-label="Notifications">
           <Bell className="h-4 w-4" />
-          <span className="absolute -right-0.5 -top-0.5 flex h-4 w-4 items-center justify-center rounded-full bg-cyan-500 text-[10px] font-bold text-cyan-950">
-            3
-          </span>
         </Button>
 
         {isAuthenticated ? (

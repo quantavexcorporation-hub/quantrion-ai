@@ -2,11 +2,14 @@
 
 import { useEffect, useState } from "react"
 import Link from "next/link"
+import { track } from "@vercel/analytics"
 import { ArrowLeft, BookOpen, Sparkles } from "lucide-react"
 import { ShellLayout } from "@/components/layout/shell-layout"
 import type { KnowledgeEntry } from "@/lib/knowledge/catalog"
 import { knowledgeHref } from "@/lib/knowledge/catalog"
+import { getCurated } from "@/lib/knowledge/curated"
 import { localBrief, type KnowledgeBrief } from "@/lib/knowledge/local-brief"
+import { PrepInterest } from "@/components/knowledge/prep-interest"
 
 export function KnowledgeArticle({
   entry,
@@ -15,14 +18,17 @@ export function KnowledgeArticle({
   entry: KnowledgeEntry
   related: KnowledgeEntry[]
 }) {
+  const curated = getCurated(entry.slug)
   const [brief, setBrief] = useState<KnowledgeBrief>(() => localBrief(entry, related))
   const [source, setSource] = useState<"atlas" | "ai">("atlas")
   const backHref = entry.hub
 
   useEffect(() => {
+    track("reference_open", { kind: entry.kind, slug: entry.slug })
     let cancelled = false
     setBrief(localBrief(entry, related))
     setSource("atlas")
+    if (curated) return
     async function load() {
       try {
         const res = await fetch(`/api/knowledge?kind=${entry.kind}&slug=${entry.slug}`)
@@ -40,7 +46,7 @@ export function KnowledgeArticle({
     return () => {
       cancelled = true
     }
-  }, [entry, related])
+  }, [curated, entry, related])
 
   return (
     <ShellLayout
@@ -65,13 +71,24 @@ export function KnowledgeArticle({
           </p>
           <p className="mt-4 text-sm leading-relaxed text-muted-foreground">
             This page is Quantrion&apos;s public reference. Full exam prep and paid courses open after learners are on the platform.
+            {curated ? ` Reviewed ${curated.reviewed}. If this page and the official notice differ, the notice wins.` : " Dates, fees, and cutoffs belong to the official notice."}
           </p>
+          {curated && (
+            <a
+              href={curated.officialUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mt-4 inline-flex text-sm font-medium text-sky-300 hover:text-sky-200"
+            >
+              Official source: {curated.officialName}
+            </a>
+          )}
         </header>
 
         <section className="glass-card rounded-2xl p-5 md:p-6">
           <div className="mb-3 flex items-center gap-2 text-sm font-medium text-foreground">
             <Sparkles className="h-4 w-4 text-sky-300" />
-            {source === "ai" ? "AI reference" : "Quantrion reference"}
+            {source === "ai" ? "AI reference" : curated ? "Checked reference" : "Quantrion reference"}
           </div>
           <div className="space-y-4 text-sm leading-relaxed text-muted-foreground">
               <p className="whitespace-pre-line text-foreground">{brief.overview}</p>
@@ -103,6 +120,8 @@ export function KnowledgeArticle({
               </div>
           </div>
         </section>
+
+        <PrepInterest entry={entry} />
 
         {related.length > 0 && (
           <section>
