@@ -24,7 +24,6 @@ import { RecentLearningTimeline } from "@/components/dashboard/recent-learning-t
 import { ProductivityGoalsMotivation } from "@/components/dashboard/productivity-goals-motivation"
 import { QuickActionsGrid } from "@/components/dashboard/quick-actions-grid"
 import { FloatingAIInsights } from "@/components/dashboard/floating-ai-insights"
-import { PromoTopRow } from "@/components/dashboard/promo-right-rail"
 import { ReferenceAtlas } from "@/components/knowledge/reference-atlas"
 import { useUser } from "@/context/SupabaseAuthProvider"
 
@@ -54,11 +53,6 @@ export function DashboardCommandCenter({
 
       <div className="flex min-w-0 flex-1 flex-col overflow-hidden">
         <TopBar aiStatus="learning" userName={`${userName} K.`} userExam={exam} />
-
-        {/* All three original displays — swipe on phones, 3-up from lg */}
-        <div className="shrink-0 border-b border-border/60 bg-background/80 px-3 py-2.5 sm:px-4 sm:py-3 md:px-6 xl:px-8">
-          <PromoTopRow />
-        </div>
 
         <div className="flex min-h-0 min-w-0 flex-1 overflow-hidden">
           <main className="q-main-canvas min-w-0 flex-1 overflow-y-auto overflow-x-hidden">
