@@ -4,7 +4,7 @@ import { useEffect, useMemo, useRef, useState } from "react"
 import Link from "next/link"
 import { Search } from "lucide-react"
 import { Input } from "@/components/ui/input"
-import { knowledgeHref, searchKnowledge } from "@/lib/knowledge/catalog"
+import type { KnowledgeEntry } from "@/lib/knowledge/catalog"
 
 export function KnowledgeSearch({
   placeholder = "Search exams and courses",
@@ -15,8 +15,19 @@ export function KnowledgeSearch({
 }) {
   const [query, setQuery] = useState("")
   const [open, setOpen] = useState(false)
+  const [results, setResults] = useState<KnowledgeEntry[]>([])
   const box = useRef<HTMLDivElement>(null)
-  const results = useMemo(() => searchKnowledge(query, 6), [query])
+  const searchRef = useRef<typeof import("@/lib/knowledge/catalog").searchKnowledge | null>(null)
+
+  const runSearch = useMemo(() => {
+    return async (value: string) => {
+      if (!searchRef.current) {
+        const mod = await import("@/lib/knowledge/catalog")
+        searchRef.current = mod.searchKnowledge
+      }
+      setResults(searchRef.current(value, 6))
+    }
+  }, [])
 
   useEffect(() => {
     function onPointer(event: MouseEvent) {
@@ -35,8 +46,11 @@ export function KnowledgeSearch({
         placeholder={placeholder}
         aria-label={placeholder}
         onChange={(event) => {
-          setQuery(event.target.value)
+          const value = event.target.value
+          setQuery(value)
           setOpen(true)
+          if (value.trim().length >= 2) void runSearch(value)
+          else setResults([])
         }}
         onFocus={() => setOpen(true)}
         className="h-9 border-border/60 bg-secondary/40 pl-10 text-sm placeholder:text-muted-foreground focus-visible:border-primary/40 focus-visible:ring-primary/30"
@@ -50,7 +64,7 @@ export function KnowledgeSearch({
               {results.map((entry) => (
                 <li key={`${entry.kind}-${entry.slug}`}>
                   <Link
-                    href={knowledgeHref(entry)}
+                    href={entry.kind === "exam" ? `/exams/${entry.slug}` : `/courses/${entry.slug}`}
                     onClick={() => setOpen(false)}
                     className="flex items-start justify-between gap-3 px-3 py-2.5 text-sm hover:bg-secondary/60"
                   >

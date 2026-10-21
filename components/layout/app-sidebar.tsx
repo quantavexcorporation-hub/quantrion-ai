@@ -79,7 +79,7 @@ const NAV_GROUPS: NavGroup[] = [
     id: "core",
     label: "Core",
     items: [
-      { id: "dashboard", title: "Dashboard", icon: LayoutDashboard, href: "/app/dashboard" },
+      { id: "dashboard", title: "Dashboard", icon: LayoutDashboard, href: "/" },
       { id: "exams", title: "Competitive Exams", icon: ClipboardList, href: "/q1" },
       { id: "study-material", title: "Study Material", icon: NotebookPen, href: "/study-material" },
       { id: "progress-iq", title: "Progress IQ", icon: BrainCircuit, href: "/knowledge-dna" },
@@ -191,6 +191,7 @@ function useUpgradeUnlocked() {
 
 function isActivePath(pathname: string, href: string) {
   if (href === "/focus-mode" && (pathname === "/focus-mode" || pathname === "/meditation")) return true
+  if (href === "/" && (pathname === "/" || pathname === "/app/dashboard")) return true
   if (pathname === href) return true
   if (href !== "/" && pathname.startsWith(`${href}/`)) return true
   return false

@@ -44,7 +44,7 @@ export function TopBar({
     .toUpperCase()
 
   return (
-    <header className="flex h-14 shrink-0 items-center gap-2 border-b border-border/80 bg-card/40 px-2 pt-[env(safe-area-inset-top)] backdrop-blur-md sm:px-3 md:px-4">
+    <header className="flex h-14 shrink-0 items-center gap-2 border-b border-border/80 bg-card px-2 pt-[env(safe-area-inset-top)] sm:px-3 md:px-4">
       <Button
         type="button"
         variant="ghost"
@@ -61,7 +61,7 @@ export function TopBar({
       </div>
 
       <div className="mx-4 hidden items-center gap-4 xl:flex">
-        <div className="ai-pulse flex items-center gap-2 rounded-full border border-border/50 bg-secondary/50 px-3 py-1.5">
+        <div className="flex items-center gap-2 rounded-full border border-border/50 bg-secondary/50 px-3 py-1.5">
           <Cpu className="h-4 w-4 text-cyan-400" />
           <span className="text-xs font-medium text-foreground">AI Core</span>
           <StatusDot variant="active" />

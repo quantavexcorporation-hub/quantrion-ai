@@ -41,11 +41,11 @@ export function WelcomeHero({ userName, exam = "JEE Advanced 2024" }: WelcomeHer
     <div className="space-y-5">
       <div className="glass-card grid-glow rounded-2xl p-5 md:p-6">
         <p className="mb-2 text-[11px] font-medium uppercase tracking-[0.18em] text-muted-foreground">
-          Welcome intelligence
+          Dashboard
         </p>
-        <h1 className="text-2xl font-semibold tracking-tight text-foreground sm:text-3xl md:text-4xl">
+        <p className="text-2xl font-semibold tracking-tight text-foreground sm:text-3xl">
           {greeting()}, <span className="text-primary">{name}</span>
-        </h1>
+        </p>
         <p className="mt-1.5 text-sm text-muted-foreground">{examLine}</p>
 
         <div className="mt-5 q-surface rounded-xl p-4">

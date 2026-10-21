@@ -1,7 +1,8 @@
 "use client"
 
+import { useEffect, useState } from "react"
 import Link from "next/link"
-import { featuredKnowledge, KNOWLEDGE_COUNTS, knowledgeHref } from "@/lib/knowledge/catalog"
+import type { KnowledgeEntry } from "@/lib/knowledge/catalog"
 import { KnowledgeSearch } from "@/components/knowledge/knowledge-search"
 
 const hubs = [
@@ -13,13 +14,26 @@ const hubs = [
 ]
 
 export function ReferenceAtlas() {
-  const featured = featuredKnowledge()
+  const [counts, setCounts] = useState({ exams: 0, courses: 0 })
+  const [featured, setFeatured] = useState<KnowledgeEntry[]>([])
+
+  useEffect(() => {
+    let cancelled = false
+    void import("@/lib/knowledge/catalog").then((mod) => {
+      if (cancelled) return
+      setCounts(mod.KNOWLEDGE_COUNTS)
+      setFeatured(mod.featuredKnowledge())
+    })
+    return () => {
+      cancelled = true
+    }
+  }, [])
 
   return (
     <section className="glass-card rounded-2xl p-5 md:p-6">
       <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-sky-300">Public reference</p>
       <h2 className="mt-2 text-xl font-semibold tracking-tight text-foreground sm:text-2xl">
-        {KNOWLEDGE_COUNTS.exams} exams and {KNOWLEDGE_COUNTS.courses} courses, open to read
+        {counts.exams > 0 ? `${counts.exams} exams and ${counts.courses} courses, open to read` : "Exams and courses, open to read"}
       </h2>
       <p className="mt-1.5 max-w-2xl text-sm text-muted-foreground">
         Search any title and open its reference. Full prep and paid courses open later.
@@ -43,7 +57,7 @@ export function ReferenceAtlas() {
           {featured.map((entry) => (
             <Link
               key={entry.slug}
-              href={knowledgeHref(entry)}
+              href={entry.kind === "exam" ? `/exams/${entry.slug}` : `/courses/${entry.slug}`}
               className="rounded-xl border border-border/60 bg-secondary/20 px-3 py-3 hover:border-sky-400/40"
             >
               <p className="text-[10px] font-semibold uppercase tracking-wide text-sky-300">
