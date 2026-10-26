@@ -86,21 +86,21 @@ const NAV_GROUPS: NavGroup[] = [
     ],
   },
   {
-    id: "learning",
-    label: "Learning",
-    items: [
-      { id: "learn", title: "Learn", icon: BookOpen, href: "/learn" },
-      { id: "quick-learn", title: "QuickLearn", icon: Zap, href: "/quick-learn" },
-      { id: "library", title: "Smart Library", icon: Library, href: "/library" },
-    ],
-  },
-  {
     id: "practice",
     label: "Practice",
     items: [
       { id: "practice", title: "Practice", icon: FileQuestion, href: "/practice" },
       { id: "tests", title: "Mock Tests", icon: Layers3, href: "/tests" },
       { id: "analytics", title: "Analytics", icon: BarChart3, href: "/analytics" },
+    ],
+  },
+  {
+    id: "learning",
+    label: "Learning",
+    items: [
+      { id: "learn", title: "Learn", icon: BookOpen, href: "/learn" },
+      { id: "quick-learn", title: "QuickLearn", icon: Zap, href: "/quick-learn" },
+      { id: "library", title: "Smart Library", icon: Library, href: "/library" },
     ],
   },
   {
