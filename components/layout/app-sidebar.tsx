@@ -82,7 +82,6 @@ const NAV_GROUPS: NavGroup[] = [
       { id: "dashboard", title: "Dashboard", icon: LayoutDashboard, href: "/" },
       { id: "exams", title: "Competitive Exams", icon: ClipboardList, href: "/q1" },
       { id: "study-material", title: "Study Material", icon: NotebookPen, href: "/study-material" },
-      { id: "progress-iq", title: "Progress IQ", icon: BrainCircuit, href: "/knowledge-dna" },
     ],
   },
   {
@@ -92,6 +91,7 @@ const NAV_GROUPS: NavGroup[] = [
       { id: "practice", title: "Practice", icon: FileQuestion, href: "/practice" },
       { id: "tests", title: "Mock Tests", icon: Layers3, href: "/tests" },
       { id: "analytics", title: "Analytics", icon: BarChart3, href: "/analytics" },
+      { id: "progress-iq", title: "Progress IQ", icon: BrainCircuit, href: "/knowledge-dna" },
     ],
   },
   {
