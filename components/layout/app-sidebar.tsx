@@ -28,6 +28,7 @@ import {
   Rocket,
   ClipboardList,
   Zap,
+  Clapperboard,
   Orbit,
   Factory,
 } from "lucide-react"
@@ -147,6 +148,12 @@ const NAV_GROUPS: NavGroup[] = [
     id: "account",
     label: "Account",
     items: [
+      {
+        id: "lecture-cognis",
+        title: "LectureCognis",
+        icon: Clapperboard,
+        href: "/lecture-cognis",
+      },
       { id: "settings", title: "Settings", icon: Settings, href: "/settings" },
     ],
   },
