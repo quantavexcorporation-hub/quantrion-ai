@@ -10,7 +10,6 @@ import {
   BookOpen,
   FileQuestion,
   BrainCircuit,
-  Bot,
   BarChart3,
   Sparkles,
   Library,
@@ -425,14 +424,6 @@ export function AppSidebar() {
           ))}
         </div>
       </nav>
-
-      <div className={cn("border-t border-border p-4 pb-[max(1rem,env(safe-area-inset-bottom))]", collapsed && "lg:hidden")}>
-        <div className="flex items-center gap-2 text-xs text-sky-300">
-          <Bot className="h-3.5 w-3.5" />
-          <span>AI Core: analyzing...</span>
-        </div>
-        <p className="mt-1 text-xs text-muted-foreground">Quantrion Q1 v2.4.1</p>
-      </div>
     </aside>
     </>
   )
