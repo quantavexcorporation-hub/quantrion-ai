@@ -29,7 +29,7 @@ export function FeatureTable() {
       <div className="mt-4 overflow-hidden rounded-xl border border-white/10">
         <div className="grid grid-cols-4 bg-white/[0.02] text-[11px] font-semibold text-muted-foreground">
           <div className="px-4 py-3">Feature</div>
-          <div className="px-4 py-3">Free</div>
+          <div className="px-4 py-3">Starter</div>
           <div className="px-4 py-3">Pro</div>
           <div className="px-4 py-3">Elite</div>
         </div>

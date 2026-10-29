@@ -3,11 +3,7 @@
 import { Check, Sparkles } from "lucide-react"
 import { cn } from "@/lib/utils"
 import type { BillingCycle, Plan } from "./types"
-
-function formatINR(value: number) {
-  if (value === 0) return "₹0"
-  return new Intl.NumberFormat("en-IN", { maximumFractionDigits: 0 }).format(value)
-}
+import { formatINR, formatUSD } from "./money"
 
 export function PricingCard({
   plan,
@@ -67,6 +63,10 @@ export function PricingCard({
             <div className="text-2xl font-semibold tracking-tight text-foreground">
               ₹{formatINR(price)}
               <span className="ml-1 text-xs font-medium text-muted-foreground">{cadenceLabel}</span>
+            </div>
+            <div className="mt-0.5 text-xs font-medium text-muted-foreground">
+              {formatUSD(price)}
+              <span className="ml-1">{cadenceLabel}</span>
             </div>
             {cycle === "yearly" && plan.monthlyPrice > 0 && (
               <div className="mt-1 text-[10px] text-muted-foreground">Billed yearly • best value</div>

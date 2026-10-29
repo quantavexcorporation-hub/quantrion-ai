@@ -3,12 +3,12 @@ import type { AddOn, Plan } from "./types"
 export const PLANS: Plan[] = [
   {
     id: "free",
-    name: "FREE",
+    name: "STARTER",
     tagline: "Starter",
-    monthlyPrice: 0,
-    yearlyPrice: 0,
+    monthlyPrice: 399,
+    yearlyPrice: 3990,
     bullets: ["Basic AI access", "Limited questions/day", "Basic analytics", "Community-level insights"],
-    cta: "Get Started Free",
+    cta: "Choose Starter",
   },
   {
     id: "pro",

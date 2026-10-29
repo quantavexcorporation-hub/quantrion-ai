@@ -3,10 +3,7 @@
 import { Plus, Check } from "lucide-react"
 import { cn } from "@/lib/utils"
 import type { AddOn } from "./types"
-
-function formatINR(value: number) {
-  return `₹${new Intl.NumberFormat("en-IN", { maximumFractionDigits: 0 }).format(value)}`
-}
+import { formatINR, formatUSD } from "./money"
 
 export function AddOnCard({
   addon,
@@ -35,7 +32,8 @@ export function AddOnCard({
           <div className="text-sm font-semibold text-foreground">{addon.name}</div>
           <div className="mt-1 text-xs text-muted-foreground">{addon.description}</div>
           <div className="mt-3 text-xs text-muted-foreground">
-            <span className="text-foreground/90">{formatINR(addon.priceMonthly)}</span> /mo
+            <span className="text-foreground/90">₹{formatINR(addon.priceMonthly)}</span>
+            <span className="text-muted-foreground"> · {formatUSD(addon.priceMonthly)}</span> /mo
           </div>
         </div>
 

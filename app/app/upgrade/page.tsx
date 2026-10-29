@@ -11,6 +11,7 @@ import { ADDONS, PLANS } from "@/components/monetization/data"
 import type { AddOnId, BillingCycle, PlanId } from "@/components/monetization/types"
 import { readAddOns, readCycle, readPlan, writeAddOns, writeCycle, writePlan } from "@/components/monetization/storage"
 import { cn } from "@/lib/utils"
+import { formatINR, formatUSD } from "@/components/monetization/money"
 import { useUser } from "@/hooks/use-user"
 
 export default function UpgradePage() {
@@ -163,7 +164,7 @@ export default function UpgradePage() {
                 type="button"
                 className="inline-flex h-11 items-center justify-center rounded-xl border border-white/10 bg-white/[0.02] px-4 text-sm font-semibold text-foreground transition-colors hover:bg-white/[0.04]"
               >
-                Start Free
+                Choose Starter
               </button>
               <button
                 type="button"
@@ -193,9 +194,10 @@ export default function UpgradePage() {
           <div className="mt-4 rounded-xl border border-white/10 bg-white/[0.02] px-4 py-3 text-xs text-muted-foreground">
             Estimated total:{" "}
             <span className="text-foreground/90">
-              ₹{new Intl.NumberFormat("en-IN", { maximumFractionDigits: 0 }).format(total)}
+              ₹{formatINR(total)} · {formatUSD(total)}
             </span>{" "}
             {cycle === "monthly" ? "/mo" : "/yr"}
+            <span className="ml-2 text-muted-foreground/80">• $1 = ₹84</span>
             <span className="ml-2 text-muted-foreground/80">• Payments integration can be plugged in later.</span>
           </div>
         </div>
