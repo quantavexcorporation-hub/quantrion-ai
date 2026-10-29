@@ -2,7 +2,7 @@ import type { Metadata } from "next"
 import { DashboardCommandCenter } from "@/components/dashboard/dashboard-command-center"
 
 export const metadata: Metadata = {
-  title: "Dashboard · Quantrion",
+  title: "Quantrion · Dashboard",
   description: "Quantrion dashboard for exams, courses, and study.",
 }
 
