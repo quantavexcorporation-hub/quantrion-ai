@@ -57,25 +57,6 @@ const THREE_DAYS_MS = 3 * 24 * 60 * 60 * 1000
 
 const NAV_GROUPS: NavGroup[] = [
   {
-    id: "frontier",
-    label: "Frontier",
-    items: [
-      {
-        id: "space-economy",
-        title: "Space Missions",
-        icon: Orbit,
-        href: "/space-economy",
-      },
-      {
-        id: "future-courses",
-        title: "Future of Industries",
-        icon: Sparkles,
-        href: "/future-courses",
-      },
-      { id: "industrial", title: "Explore Industries", icon: Factory, href: "/q2" },
-    ],
-  },
-  {
     id: "core",
     label: "Core",
     items: [
@@ -143,6 +124,25 @@ const NAV_GROUPS: NavGroup[] = [
         href: "/space-guidance",
         chip: true,
       },
+    ],
+  },
+  {
+    id: "frontier",
+    label: "Frontier",
+    items: [
+      {
+        id: "space-economy",
+        title: "Space Missions",
+        icon: Orbit,
+        href: "/space-economy",
+      },
+      {
+        id: "future-courses",
+        title: "Future of Industries",
+        icon: Sparkles,
+        href: "/future-courses",
+      },
+      { id: "industrial", title: "Explore Industries", icon: Factory, href: "/q2" },
     ],
   },
   {
