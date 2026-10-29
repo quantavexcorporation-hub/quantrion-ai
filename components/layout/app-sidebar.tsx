@@ -24,12 +24,10 @@ import {
   ChevronLeft,
   X,
   NotebookPen,
-  UserRound,
   Layers3,
   Rocket,
   ClipboardList,
   Zap,
-  Clapperboard,
   Orbit,
   Factory,
 } from "lucide-react"
@@ -149,14 +147,7 @@ const NAV_GROUPS: NavGroup[] = [
     id: "account",
     label: "Account",
     items: [
-      { id: "profile", title: "Profile", icon: UserRound, href: "/profile" },
       { id: "settings", title: "Settings", icon: Settings, href: "/settings" },
-      {
-        id: "lecture-cognis",
-        title: "LectureCognis",
-        icon: Clapperboard,
-        href: "/lecture-cognis",
-      },
     ],
   },
 ]
