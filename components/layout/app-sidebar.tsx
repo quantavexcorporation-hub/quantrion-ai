@@ -143,7 +143,6 @@ const NAV_GROUPS: NavGroup[] = [
         href: "/space-guidance",
         chip: true,
       },
-      { id: "strategy", title: "Strategy AI", icon: Sparkles, href: "/strategy", chip: true },
     ],
   },
   {

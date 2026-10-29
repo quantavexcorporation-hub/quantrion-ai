@@ -5,6 +5,7 @@ import { AppSidebar } from "@/components/layout/app-sidebar"
 import { TopBar } from "@/components/layout/top-bar"
 import { WelcomeHero } from "@/components/dashboard/welcome-hero"
 import { ReferenceAtlas } from "@/components/knowledge/reference-atlas"
+import { StrategyMentor } from "@/components/dashboard/strategy-mentor"
 import { useUser } from "@/context/SupabaseAuthProvider"
 
 const StudyDesk = dynamic(() => import("@/components/dashboard/study-desk").then((m) => m.StudyDesk), {
@@ -40,6 +41,7 @@ export function DashboardCommandCenter({
                   Home for exams, courses, and your study desk.
                 </p>
               </header>
+              <StrategyMentor />
               <ReferenceAtlas />
               <WelcomeHero userName={userName} exam={exam} />
               {showStudyDesk && <StudyDesk />}
