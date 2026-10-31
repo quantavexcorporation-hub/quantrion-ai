@@ -2,7 +2,7 @@ import type { Metadata } from "next"
 import { FinanceDashboard } from "@/components/finance-iq/finance-dashboard"
 
 export const metadata: Metadata = {
-  title: "Quantrion · Finance IQ",
+  title: "Quantrion · Finance Desk",
   description: "Student financial dashboard for scholarships, earnings, and savings.",
 }
 

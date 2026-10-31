@@ -134,7 +134,7 @@ const NAV_GROUPS: NavGroup[] = [
     items: [
       {
         id: "finance-iq",
-        title: "Finance IQ",
+        title: "Finance Desk",
         icon: Wallet,
         href: "/finance-iq",
         exact: true,
