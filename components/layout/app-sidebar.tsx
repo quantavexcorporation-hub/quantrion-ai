@@ -30,6 +30,9 @@ import {
   Clapperboard,
   Orbit,
   Factory,
+  Wallet,
+  Coins,
+  PiggyBank,
 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { useEffect, useMemo, useState } from "react"
@@ -41,6 +44,7 @@ type NavItem = {
   href: string
   icon: LucideIcon
   chip?: boolean
+  exact?: boolean
   children?: NavItem[]
 }
 
@@ -128,6 +132,18 @@ const NAV_GROUPS: NavGroup[] = [
     id: "frontier",
     label: "Frontier",
     items: [
+      {
+        id: "finance-iq",
+        title: "Finance IQ",
+        icon: Wallet,
+        href: "/finance-iq",
+        exact: true,
+        children: [
+          { id: "scholarship-iq", title: "Scholarship IQ", icon: GraduationCap, href: "/finance-iq/scholarship" },
+          { id: "earn-iq", title: "Earn IQ", icon: Coins, href: "/finance-iq/earn" },
+          { id: "wealth-iq", title: "Wealth IQ", icon: PiggyBank, href: "/finance-iq/wealth" },
+        ],
+      },
       { id: "future-courses", title: "Future of Industries", icon: Sparkles, href: "/future-courses" },
       { id: "industrial", title: "Explore Industries", icon: Factory, href: "/q2" },
     ],
@@ -197,7 +213,7 @@ function NavLink({
   collapsed: boolean
   nested?: boolean
 }) {
-  const isActive = isActivePath(pathname, item.href)
+  const isActive = item.exact ? pathname === item.href : isActivePath(pathname, item.href)
   const Icon = item.icon
   const nav = useNav()
 
