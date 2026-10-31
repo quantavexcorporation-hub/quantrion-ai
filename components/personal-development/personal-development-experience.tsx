@@ -18,11 +18,34 @@ import { ShellLayout } from "@/components/layout/shell-layout"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { cn } from "@/lib/utils"
-import { PD_CATALOG, PD_PATHS, PD_TOTAL_COURSES, type PdCategory } from "./pd-data"
+import { PD_CATALOG, PD_PATHS, type PdCategory } from "./pd-data"
+import { SPACE_INDUSTRIAL_CATALOG } from "@/components/ecosystem-gateway/qrion-space-catalog"
 import { courseHref } from "@/lib/knowledge/catalog"
 import { AiEmploymentPanel } from "@/components/ai-employment/ai-employment-panel"
 
 const ACCENT = "#2dd4bf"
+
+const SPACE_COURSE_CATEGORIES: PdCategory[] = SPACE_INDUSTRIAL_CATALOG.filter((category) => category.pillar === "space").map(
+  (category) => ({
+    id: `space-${category.id}`,
+    emoji: category.emoji,
+    title: category.title,
+    blurb: category.blurb,
+    courses: category.courses,
+  }),
+)
+
+const INDUSTRY_CATALOG: PdCategory[] = (() => {
+  const spaceIndex = PD_CATALOG.findIndex((category) => category.id === "future-space-economy")
+  if (spaceIndex < 0) return [...PD_CATALOG, ...SPACE_COURSE_CATEGORIES]
+  return [
+    ...PD_CATALOG.slice(0, spaceIndex + 1),
+    ...SPACE_COURSE_CATEGORIES,
+    ...PD_CATALOG.slice(spaceIndex + 1),
+  ]
+})()
+
+const INDUSTRY_COURSE_COUNT = INDUSTRY_CATALOG.reduce((count, category) => count + category.courses.length, 0)
 
 function PdHero({ onEnter }: { onEnter: () => void }) {
   const canvasRef = useRef<HTMLCanvasElement>(null)
@@ -190,10 +213,10 @@ function PdHero({ onEnter }: { onEnter: () => void }) {
           transition={{ delay: 0.28 }}
         >
           <span className="rounded-full border border-white/10 bg-white/5 px-3 py-1.5">
-            {PD_CATALOG.length} domains
+            {INDUSTRY_CATALOG.length} domains
           </span>
           <span className="rounded-full border border-white/10 bg-white/5 px-3 py-1.5">
-            {PD_TOTAL_COURSES}+ courses
+            {INDUSTRY_COURSE_COUNT}+ courses
           </span>
           <span className="rounded-full border border-white/10 bg-white/5 px-3 py-1.5">
             Tomorrow&apos;s industries
@@ -206,15 +229,15 @@ function PdHero({ onEnter }: { onEnter: () => void }) {
 
 export function PersonalDevelopmentExperience() {
   const labRef = useRef<HTMLDivElement>(null)
-  const [activeId, setActiveId] = useState(PD_CATALOG[0].id)
+  const [activeId, setActiveId] = useState(INDUSTRY_CATALOG[0].id)
   const [query, setQuery] = useState("")
   const [pathId, setPathId] = useState<(typeof PD_PATHS)[number]["id"]>("ai-frontier")
   const reduce = useReducedMotion()
 
   const filtered = useMemo(() => {
     const q = query.trim().toLowerCase()
-    if (!q) return PD_CATALOG
-    return PD_CATALOG.map((cat) => ({
+    if (!q) return INDUSTRY_CATALOG
+    return INDUSTRY_CATALOG.map((cat) => ({
       ...cat,
       courses: cat.courses.filter(
         (c) => c.toLowerCase().includes(q) || cat.title.toLowerCase().includes(q),
@@ -303,7 +326,7 @@ export function PersonalDevelopmentExperience() {
                   All Future of Industries
                 </h2>
                 <p className="mt-2 max-w-2xl text-sm text-slate-400">
-                  {PD_TOTAL_COURSES}+ modules across AI, quantum, space economy, biotech, nanotech,
+                  {INDUSTRY_COURSE_COUNT}+ modules across AI, quantum, space economy, biotech, nanotech,
                   materials, fusion, autonomy, BCIs, next-gen computing — and personal development.
                 </p>
               </div>
@@ -314,7 +337,7 @@ export function PersonalDevelopmentExperience() {
                 </span>
                 <span className="inline-flex items-center gap-1.5 rounded-full border border-white/10 bg-white/5 px-3 py-1.5">
                   <Zap className="h-3.5 w-3.5 text-amber-300" />
-                  {query ? `${matchCount} matches` : `${PD_TOTAL_COURSES} courses`}
+                  {query ? `${matchCount} matches` : `${INDUSTRY_COURSE_COUNT} courses`}
                 </span>
               </div>
             </div>

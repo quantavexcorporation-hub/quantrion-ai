@@ -9,7 +9,7 @@ function siteUrl() {
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const base = siteUrl()
-  const hubs = ["", "/q1", "/q2", "/space-economy", "/personal-development", "/future-courses"]
+  const hubs = ["", "/q1", "/q2", "/personal-development", "/future-courses"]
   return [
     ...hubs.map((path) => ({
       url: `${base}${path || "/"}`,

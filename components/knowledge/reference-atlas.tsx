@@ -5,13 +5,12 @@ import Link from "next/link"
 import type { KnowledgeEntry } from "@/lib/knowledge/catalog"
 import { KnowledgeSearch } from "@/components/knowledge/knowledge-search"
 
-const hubs = [
-  { href: "/q1", label: "Competitive exams" },
-  { href: "/space-economy", label: "Space Missions" },
-  { href: "/q2", label: "Industries" },
-  { href: "/personal-development", label: "Personal development" },
-  { href: "/future-courses", label: "Future courses" },
-]
+  const hubs = [
+    { href: "/q1", label: "Competitive exams" },
+    { href: "/q2", label: "Industries" },
+    { href: "/personal-development", label: "Personal development" },
+    { href: "/future-courses", label: "Future courses" },
+  ]
 
 export function ReferenceAtlas() {
   const [counts, setCounts] = useState({ exams: 0, courses: 0 })

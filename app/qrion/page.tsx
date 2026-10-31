@@ -8,12 +8,12 @@ export default function QrionRedirectPage() {
   const router = useRouter()
 
   useEffect(() => {
-    router.replace("/space-economy#space-technology")
+    router.replace("/future-courses")
   }, [router])
 
   return (
     <div className="flex min-h-[40vh] items-center justify-center text-sm text-muted-foreground">
-      Opening Space Technology inside Space Missions…
+      Opening Future of Industries…
     </div>
   )
 }

@@ -128,18 +128,7 @@ const NAV_GROUPS: NavGroup[] = [
     id: "frontier",
     label: "Frontier",
     items: [
-      {
-        id: "space-economy",
-        title: "Space Missions",
-        icon: Orbit,
-        href: "/space-economy",
-      },
-      {
-        id: "future-courses",
-        title: "Future of Industries",
-        icon: Sparkles,
-        href: "/future-courses",
-      },
+      { id: "future-courses", title: "Future of Industries", icon: Sparkles, href: "/future-courses" },
       { id: "industrial", title: "Explore Industries", icon: Factory, href: "/q2" },
     ],
   },

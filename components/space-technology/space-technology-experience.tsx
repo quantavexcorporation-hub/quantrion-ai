@@ -208,7 +208,7 @@ function SpaceTechHero({ onExplore }: { onExplore: () => void }) {
             className="gap-2 border-cyan-400/40 bg-white/5 text-cyan-100 hover:bg-white/10"
             asChild
           >
-            <Link href="/space-economy">
+            <Link href="/future-courses">
               <Orbit className="h-4 w-4" />
               Space Missions Hub
             </Link>
@@ -346,7 +346,7 @@ export function SpaceTechnologyExperience() {
                   className="gap-2 bg-cyan-500 text-slate-950 hover:bg-cyan-400"
                   asChild
                 >
-                  <Link href="/space-economy">
+                  <Link href="/future-courses">
                     <BookOpen className="h-4 w-4" />
                     Open Space Missions
                   </Link>

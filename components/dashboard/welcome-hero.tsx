@@ -96,8 +96,8 @@ export function WelcomeHero({ userName, exam = "JEE Advanced 2024" }: WelcomeHer
                 </Link>
               </Button>
               <Button size="sm" variant="outline" className="gap-1.5" asChild>
-                <Link href="/space-economy">
-                  <MonitorPlay className="h-3.5 w-3.5" /> Space Missions
+                <Link href="/future-courses">
+                  <MonitorPlay className="h-3.5 w-3.5" /> Future of Industries
                 </Link>
               </Button>
               <Button size="sm" variant="outline" className="gap-1.5" asChild>

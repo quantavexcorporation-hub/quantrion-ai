@@ -191,7 +191,7 @@ export function CareerExperience() {
                   <Link href="/q2">Explore Industries</Link>
                 </Button>
                 <Button asChild variant="secondary" size="sm">
-                  <Link href="/space-economy">Browse Space Missions</Link>
+                  <Link href="/future-courses">Browse space courses</Link>
                 </Button>
                 <Button asChild size="sm">
                   <Link href="/app/upgrade">Upgrade for full access</Link>

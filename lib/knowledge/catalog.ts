@@ -69,7 +69,7 @@ function buildCatalog() {
         category: category.title,
         categoryId: category.id,
         emoji: category.emoji,
-        hub: category.pillar === "space" ? "/space-economy" : "/q2",
+        hub: category.pillar === "space" ? "/future-courses" : "/q2",
       })
     }
   }
