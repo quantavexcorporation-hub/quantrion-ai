@@ -44,7 +44,7 @@ export function EarnIq() {
       aiStatus="analyzing"
     >
       <p className="mb-4 text-xs text-muted-foreground">
-        Part of <Link href="/finance-iq" className="text-sky-300 hover:text-sky-200">Finance IQ</Link>
+        Part of <Link href="/finance-iq" className="text-sky-300 hover:text-sky-200">Financial Intelligence</Link>
         {" · "}Monthly {formatINR(totals.month)} · One-time {formatINR(totals.once)}
       </p>
       <form onSubmit={add} className="glass-card grid gap-3 rounded-2xl p-4 sm:grid-cols-[1fr_8rem_auto_auto]">

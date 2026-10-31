@@ -129,12 +129,12 @@ const NAV_GROUPS: NavGroup[] = [
     ],
   },
   {
-    id: "frontier",
-    label: "Frontier",
+    id: "financial-intelligence",
+    label: "Financial Intelligence",
     items: [
       {
         id: "finance-iq",
-        title: "Finance IQ",
+        title: "Financial Intelligence",
         icon: Wallet,
         href: "/finance-iq",
         exact: true,
@@ -144,6 +144,12 @@ const NAV_GROUPS: NavGroup[] = [
           { id: "wealth-iq", title: "Wealth IQ", icon: PiggyBank, href: "/finance-iq/wealth" },
         ],
       },
+    ],
+  },
+  {
+    id: "frontier",
+    label: "Frontier",
+    items: [
       { id: "future-courses", title: "Future of Industries", icon: Sparkles, href: "/future-courses" },
       { id: "industrial", title: "Explore Industries", icon: Factory, href: "/q2" },
     ],

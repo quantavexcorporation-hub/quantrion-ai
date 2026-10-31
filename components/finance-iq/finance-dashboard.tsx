@@ -26,7 +26,7 @@ export function FinanceDashboard() {
 
   return (
     <ShellLayout
-      title="Finance IQ"
+      title="Financial Intelligence"
       subtitle="One place to fund study, track what you earn, and move a savings goal forward."
       aiStatus="analyzing"
     >
